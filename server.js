@@ -43,5 +43,35 @@ app.get("/mensalidades", async (req,res) => {
     }
 });
 
+//update
+app.put("/mensalidades/:id", async (req,res) => {
+    try {
+        const newValue = await mensalidade.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+        res.json(newValue)
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+});
+
+
+//delete
+app.delete("/mensalidades/:id", async (req,res) => {
+    try {
+        const deleteMensalidade = await mensalidade.findByIdAndDelete(
+            req.params.id
+        );
+        res.json(deleteMensalidade)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+    });
+
+
+
 
 app.listen(PORT, () => console.log(`PORT connected http://localhost:${PORT}`))
